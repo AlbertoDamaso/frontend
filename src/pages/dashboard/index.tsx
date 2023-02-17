@@ -8,17 +8,7 @@ import styles from "./styles.module.scss";
 import { toast } from "react-toastify";
 
 type ProdProps = {
-    // parms: {
-    //     X-Amz-Algorithm: string;
-    //     X-Amz-Content-Sha256: string;
-    //     X-Amz-Credential: string;
-    //     X-Amz-Date: string;
-    //     X-Amz-Expires: string;
-    //     X-Amz-Signature: string;
-    //     X-Amz-SignedHeaders: string;
-    //     response-content-disposition: string;
-    //     x-id: string;
-    // }
+
         id: number;
         name: string;
         price: number;
@@ -37,9 +27,17 @@ export default function Dashboard({ prod }: HomeProps){
 
         const apiClient = setupAPIClient(undefined);
 
-        const response = await apiClient.get('/',{
+        const response = await apiClient.get('/10792f77-3dd6-4ccd-bf4f-99967a8b1b87/products.json?',{
             params:{
-
+                'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
+                'X-Amz-Content-Sha256': 'UNSIGNED-PAYLOAD',
+                'X-Amz-Credential': 'AKIAT73L2G45EIPT3X45%2F20230216%2Fus-west-2%2Fs3%2Faws4_request',
+                'X-Amz-Date': '20230216T215800Z',
+                'X-Amz-Expires': 86400,
+                'X-Amz-Signature': 'bc670c703d7f31634cfb9548e0a514262513ae045428f7303d94170f4d24a11d',
+                'X-Amz-SignedHeaders': 'host',
+                'response-content-disposition': 'filename%3D%22products.json%22',
+                'x-id': 'GetObject',
             }
         });
         setProdList(response.data);
@@ -65,7 +63,10 @@ export default function Dashboard({ prod }: HomeProps){
                     {prodList.map( item => (
                         <section key={item.id} className={styles.orderItem}>
                             <div className={styles.tag}></div>
-                            <span>Mesa {item.name}</span>
+                            <span>Produto {item.name}</span>
+                            <span>Produto {item.price}</span>
+                            <span>Produto {item.score}</span>
+                            <span>Produto {item.image}</span>
                         </section>
                     ))}
                 </article>
